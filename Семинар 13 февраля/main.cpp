@@ -7,35 +7,40 @@
  */
 
 /*
- 1) Контейнер pair<X,Y>
+ 2) Контейнер tuple<N1, N2, ...> - хранит любое количество объектов
  */
 
 #include <iostream>
-#include <vector>
-#include <map>
-#include <utility>
+#include <tuple>
 
-using namespace std;
+
+template<int index, int Max, typename...Types>
+struct tuple_printer
+{
+    static void print(std::ostream& s, const std::tuple<Types...> & tup)
+    {
+        s << std::get<index>(tup) << (index + 1 == Max ? "" : ", ");
+        tuple_printer<index + 1, Max, Types...>::print(s, tup);
+    }
+};
+
+template<int Max, typename ... Types>
+struct tuple_printer<Max, Max, Types...>
+{
+    static void print(std::ostream & s, const std::tuple <Types...> & tup) {} ;
+};
+
+template <typename ... Types>
+std::ostream& operator << (std::ostream& s, const std::tuple<Types...> & tup)
+{
+    tuple_printer<0, sizeof...(Types), Types...>::print(s, tup);
+    return s;
+}
 
 int main()
 {
-    pair<int, double> p(23, 84.32);
-    cout << "first = " << p.first << endl;
-    cout << "second = " << p.second << endl;
-    
-    int i = 0;
-    auto p1 = make_pair(i, i);
-    cout << "first = " << p1.first << endl;
-    cout << "second = " << p1.second << endl;
-    
-    auto p2 = make_pair(ref(i), ref(i));
-    cout << "first = " << p2.first << endl;
-    cout << "second = " << p2.second << endl;
-    
-    p2.first++;
-    p2.second++;
-    cout << "first = " << p2.first << endl;
-    cout << "second = " << p2.second << endl;
-    cout << "i = " << i << endl;
+    //get, make_tuple, tie(добавляет по ссылке), tuple_size<тип кортежа>::value - количество элементов, tuple_element<индекс, тип кортежа>::type - тип элемента tuple_cat() - конкатенация двух кортежей
+    auto tup = std::make_tuple(22, 43.22, "Hello");
+    std::cout << tup << std::endl;
     return 0;
 }
