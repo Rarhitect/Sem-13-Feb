@@ -7,40 +7,26 @@
  */
 
 /*
- 2) Контейнер tuple<N1, N2, ...> - хранит любое количество объектов
+ 3) Контейнер vector - динамический массив
  */
 
 #include <iostream>
-#include <tuple>
+#include <vector>
 
-
-template<int index, int Max, typename...Types>
-struct tuple_printer
+void print_sz_n_cap(const std::vector<int> & v)
 {
-    static void print(std::ostream& s, const std::tuple<Types...> & tup)
-    {
-        s << std::get<index>(tup) << (index + 1 == Max ? "" : ", ");
-        tuple_printer<index + 1, Max, Types...>::print(s, tup);
-    }
-};
-
-template<int Max, typename ... Types>
-struct tuple_printer<Max, Max, Types...>
-{
-    static void print(std::ostream & s, const std::tuple <Types...> & tup) {} ;
-};
-
-template <typename ... Types>
-std::ostream& operator << (std::ostream& s, const std::tuple<Types...> & tup)
-{
-    tuple_printer<0, sizeof...(Types), Types...>::print(s, tup);
-    return s;
+    std::cout << "size = " << v.size() << "; capacity = " << v.capacity() << std::endl;
 }
 
 int main()
 {
-    //get, make_tuple, tie(добавляет по ссылке), tuple_size<тип кортежа>::value - количество элементов, tuple_element<индекс, тип кортежа>::type - тип элемента tuple_cat() - конкатенация двух кортежей
-    auto tup = std::make_tuple(22, 43.22, "Hello");
-    std::cout << tup << std::endl;
+    //push_back, emplace_back, size, capacity, begin/end, operator[], at,
+    std::vector<int> v1;
+    std::vector<int> v2(4);
+    std::vector<int> v3(128);
+    v3.resize(100);
+    print_sz_n_cap(v1);
+    print_sz_n_cap(v2);
+    print_sz_n_cap(v3);
     return 0;
 }
