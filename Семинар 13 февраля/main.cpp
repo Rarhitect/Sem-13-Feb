@@ -6,22 +6,21 @@
  3) Итераторы
  */
 
+/*
+ 1) Контейнер pair<X,Y>
+ */
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
 int main()
 {
-    vector<int> v(10);
-    vector<int>::iterator it;
-    it = v.begin(); //итератор ведет себя как указатель на элемент вектора
-    auto it1 = v.begin();
-    //for(auto it = v.begin(); it != v.end(); ++it)  ---- v.end() ставит итератор на элемент следующий после последнего
-    //for(auto i: v) --- копирование будет --- синтаксический сахар
-    //for(auto &i: v) --- ссылается на сам элемент
-    //for(const auto &i: v) --- не хотим копировать и менять элементы v
+    pair<int, double> p(23, 84.32);
+    cout << "first = " << p.first << endl;
+    cout << "second = " << p.second << endl;
     
     return 0;
 }
