@@ -7,26 +7,32 @@
  */
 
 /*
- 3) Контейнер vector - динамический массив
+ 4) Контейнер array
+ 5) deque - двусторонняя очередь
+ 6) list - двусвязный список
+ 7) forward_list - односвязный список
+ 
+ Дополнительные контейнеры на основе этих семи:
+ 8) stack
+ 9) queue
+ 10) priority_queue
+ 11) bitset
  */
 
 #include <iostream>
-#include <vector>
-
-void print_sz_n_cap(const std::vector<int> & v)
-{
-    std::cout << "size = " << v.size() << "; capacity = " << v.capacity() << std::endl;
-}
+#include <bitset>
 
 int main()
 {
-    //push_back, emplace_back, size, capacity, begin/end, operator[], at,
-    std::vector<int> v1;
-    std::vector<int> v2(4);
-    std::vector<int> v3(128);
-    v3.resize(100);
-    print_sz_n_cap(v1);
-    print_sz_n_cap(v2);
-    print_sz_n_cap(v3);
+    enum Color
+    {
+        red, yellow, green, blue, white, black, quantity
+    };
+    std::bitset<quantity> colors;
+    colors.set(red);
+    colors.set(blue);
+    std::cout << "bitset of used colors " << colors << std::endl;
+    std::cout << "quantity of used colors " << colors.count() << std::endl;
+    std::cout << "bitset of not used colors " << ~colors << std::endl;
     return 0;
 }
